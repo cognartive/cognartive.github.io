@@ -34,6 +34,19 @@ a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px
 @keyframes float1{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(18px,-22px,0)}}
 @keyframes float2{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-24px,16px,0)}}
 @keyframes ringSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes floaty{0%,100%{transform:translateY(-7px)}50%{transform:translateY(7px)}}
+@keyframes softIn{0%{opacity:.18}100%{opacity:1}}
+@keyframes swayA{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(7px,-8px,0)}}
+@keyframes swayB{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(-8px,6px,0)}}
+@keyframes morph{0%,100%{border-radius:3px;transform:rotate(0)}50%{border-radius:50%;transform:rotate(45deg)}}
+@keyframes swell{0%,100%{transform:scale(.72)}50%{transform:scale(1.12)}}
+@keyframes ripple{0%{transform:scale(.35);opacity:.85}100%{transform:scale(1.6);opacity:0}}
+@keyframes sweepX{0%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+@keyframes hatchShift{from{background-position:0 0}to{background-position:24px 0}}
+@keyframes pendulum{0%,100%{transform:rotate(-48deg)}50%{transform:rotate(48deg)}}
+@keyframes trail{0%{transform:translateX(-6px);opacity:0}35%{opacity:1}100%{transform:translateX(26px);opacity:0}}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes breathe{0%,100%{opacity:.5;filter:blur(46px)}50%{opacity:.85;filter:blur(62px)}}
 [data-shelf]::-webkit-scrollbar{height:0}
 </style>
 </helmet>
@@ -109,6 +122,9 @@ a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px
 <div style="font-family:'Libre Caslon Display',serif;font-size:15px;color:var(--acc)">01</div>
 <h2 style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:clamp(34px,4.4vw,58px);line-height:1.02;margin:8px 0 18px">Hi, and welcome</h2>
 <p style="margin:0;color:var(--ink2)">You are in the right place. This page is the companion to the paper: the abstract, the method, what we found, and every interactive figure from the supplementary material, ready to explore.</p>
+<div style="position:relative;height:clamp(420px,62vh,620px);margin:30px -70px 0 -50px;overflow:hidden">
+<canvas ref="{{ welcomeRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+</div>
 </div>
 <div>
 <div style="font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);padding-bottom:12px;border-bottom:1px solid var(--rule)">Abstract</div>
@@ -178,7 +194,17 @@ a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px
 </div>
 </sc-for>
 </div>
-<div ref="{{ panelRef }}" onClick="{{ onFindingClick }}" style="background:var(--card);border:1px solid var(--rule);border-radius:22px;padding:30px;box-shadow:0 14px 44px var(--shadow)">
+<div style="display:grid;animation:floaty 9s ease-in-out infinite">
+<div style="grid-area:1/1;visibility:hidden;pointer-events:none;padding:30px;border:1px solid transparent" aria-hidden="true">
+<div style="padding-bottom:14px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase">Question VIII of VIII</div>
+<p style="margin:20px 0 0;font-size:16px">Light and contrast, its type, and the purpose the model infers for it across the collection.</p>
+<p style="font-family:'Libre Caslon Display',serif;font-size:clamp(21px,2.4vw,29px);line-height:1.24;margin:16px 0 0">Light is most often tied to highlights, depth and texture; diffused and soft light dominate, and emphasis or directing attention are the purposes most often inferred.</p>
+<div style="height:96px;margin:26px 0 0"></div>
+<div style="margin:26px 0 12px;font-size:12.5px">Vocabulary returned</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px"><span style="padding:7px 14px;font-size:14.5px">chiaroscuro</span><span style="padding:7px 14px;font-size:14.5px">soft shadows</span><span style="padding:7px 14px;font-size:14.5px">high contrast</span><span style="padding:7px 14px;font-size:14.5px">diffused</span><span style="padding:7px 14px;font-size:14.5px">dappled</span><span style="padding:7px 14px;font-size:14.5px">creating mood</span><span style="padding:7px 14px;font-size:14.5px">drawing attention</span><span style="padding:7px 14px;font-size:14.5px">pointillism</span></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px"><span style="padding:9px 16px;font-size:13.5px">Figure S8 →</span><span style="padding:9px 16px;font-size:13.5px">Figure S9 →</span><span style="padding:9px 16px;font-size:13.5px">Figure S10 →</span><span style="padding:9px 16px;font-size:13.5px">Figure S11 →</span></div>
+</div>
+<div ref="{{ panelRef }}" onClick="{{ onFindingClick }}" style="grid-area:1/1;background:var(--card);border:1px solid var(--rule);border-radius:22px;padding:30px;box-shadow:0 22px 60px var(--shadow)">
 <div data-stagger="1" style="display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);padding-bottom:14px;border-bottom:1px solid var(--rule)"><span>Question {{ qRoman }} of VIII</span><span style="color:var(--acc)">{{ qName }}</span></div>
 <p data-stagger="1" style="margin:20px 0 0;font-size:16px;color:var(--ink2)">{{ qDesc }}</p>
 <p data-stagger="1" style="font-family:'Libre Caslon Display',serif;font-size:clamp(21px,2.4vw,29px);line-height:1.24;margin:16px 0 0">{{ qFinding }}</p>
@@ -207,35 +233,52 @@ a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px
 </div>
 </div>
 </div>
+</div>
 </section>
 
-<section style="margin:110px -28px 0;padding:64px 28px;background:var(--ink);color:var(--paper);position:relative;overflow:hidden" data-reveal="1">
-<div style="position:relative;z-index:2;max-width:1184px;margin:0 auto">
-<div style="font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">More than twenty recurring emotional themes</div>
+<section style="margin:110px -28px 0;padding:70px 28px 56px;background:#100E0C;color:#F6F2EA;position:relative;overflow:hidden" data-reveal="1">
+<div style="position:absolute;width:52vw;height:52vw;left:-8vw;top:-16vw;border-radius:50%;background:radial-gradient(circle,#D9401F,transparent 62%);opacity:.5;filter:blur(46px);animation:breathe 17s ease-in-out infinite;pointer-events:none"></div>
+<div style="position:absolute;width:46vw;height:46vw;right:-6vw;bottom:-18vw;border-radius:50%;background:radial-gradient(circle,#3F4E9E,transparent 62%);opacity:.45;filter:blur(52px);animation:breathe 23s ease-in-out 2s infinite;pointer-events:none"></div>
+<div style="position:absolute;width:34vw;height:34vw;left:38%;top:22%;border-radius:50%;background:radial-gradient(circle,#C9A227,transparent 62%);opacity:.3;filter:blur(58px);animation:breathe 29s ease-in-out 4s infinite;pointer-events:none"></div>
+<div style="position:absolute;inset:0;opacity:.35;pointer-events:none;background-image:url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22160%22 height=%22160%22><filter id=%22m%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%22.9%22 numOctaves=%223%22/></filter><rect width=%22160%22 height=%22160%22 filter=%22url(%23m)%22 opacity=%22.4%22/></svg>')"></div>
+<div style="position:relative;z-index:3;max-width:1184px;margin:0 auto">
+<div style="font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#FF8A5C">More than twenty recurring emotional themes</div>
 <h3 style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:clamp(28px,3.6vw,48px);margin:10px 0 0;max-width:22ch">The vocabulary the model reaches for when it reads feeling</h3>
 </div>
-<div ref="{{ emoRef }}" style="position:relative;height:300px;margin-top:20px;z-index:1"></div>
-<div style="position:relative;z-index:2;max-width:1184px;margin:0 auto;font-size:14.5px;opacity:.7">Positive and neutral interpretations occur more frequently than negative ones.</div>
+<div ref="{{ emoRef }}" style="position:relative;height:clamp(440px,58vh,580px);margin-top:26px;z-index:2"></div>
+<div style="position:relative;z-index:3;max-width:1184px;margin:0 auto;display:flex;flex-wrap:wrap;gap:22px;align-items:center;font-size:13.5px">
+<span style="display:flex;align-items:center;gap:8px"><span style="width:9px;height:9px;border-radius:50%;background:#F2B33D"></span>Positive</span>
+<span style="display:flex;align-items:center;gap:8px"><span style="width:9px;height:9px;border-radius:50%;background:#E8E0D2"></span>Neutral</span>
+<span style="display:flex;align-items:center;gap:8px"><span style="width:9px;height:9px;border-radius:50%;background:#8FA6C9"></span>Negative</span>
+<span style="opacity:.62">Positive and neutral interpretations occur more frequently than negative ones. The grouping shown here is illustrative; measured counts are in Figures S6 and S7.</span>
+</div>
 </section>
 
 <section style="padding:96px 0 0" data-reveal="1">
 <div style="font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Tonal register across six historical periods</div>
 <h3 style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:clamp(28px,3.6vw,44px);margin:10px 0 26px">Twelve tones</h3>
-<div style="display:flex;gap:6px;height:170px">
-<div style="flex:1;border-radius:12px;background:#F2ECDF;display:flex;align-items:flex-end;padding:14px;color:#191612;font-size:13px;letter-spacing:.06em;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">light</span></div>
-<div style="flex:1;border-radius:12px;background:#B9B2A6;display:flex;align-items:flex-end;padding:14px;color:#191612;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">monochromatic</span></div>
-<div style="flex:1;border-radius:12px;background:#9A7B4F;display:flex;align-items:flex-end;padding:14px;color:#fff;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">earthy</span></div>
-<div style="flex:1;border-radius:12px;background:#7B3B2B;display:flex;align-items:flex-end;padding:14px;color:#fff;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">rich</span></div>
-<div style="flex:1;border-radius:12px;background:#D9401F;display:flex;align-items:flex-end;padding:14px;color:#fff;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">vibrant</span></div>
-<div style="flex:1;border-radius:12px;background:#8E8B7A;display:flex;align-items:flex-end;padding:14px;color:#fff;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">muted</span></div>
-<div style="flex:1;border-radius:12px;background:#2C2822;display:flex;align-items:flex-end;padding:14px;color:#fff;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">dark</span></div>
-<div style="flex:1;border-radius:12px;background:#F0A81E;display:flex;align-items:flex-end;padding:14px;color:#191612;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">vivid</span></div>
-<div style="flex:1;border-radius:12px;background:#F6E7B4;display:flex;align-items:flex-end;padding:14px;color:#191612;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">bright</span></div>
-<div style="flex:1;border-radius:12px;background:#243A56;display:flex;align-items:flex-end;padding:14px;color:#fff;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">deep</span></div>
-<div style="flex:1;border-radius:12px;background:#CFC3B4;display:flex;align-items:flex-end;padding:14px;color:#191612;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">soft</span></div>
-<div style="flex:1;border-radius:12px;background:#EBC7CD;display:flex;align-items:flex-end;padding:14px;color:#191612;font-size:13px;transition:flex .5s cubic-bezier(.2,.8,.2,1)" style-hover="flex:2.6"><span style="writing-mode:vertical-rl;transform:rotate(180deg)">pastel</span></div>
+<div ref="{{ toneRef }}" style="display:flex;gap:5px;height:clamp(260px,36vh,340px);border-radius:16px;overflow:hidden">
+<sc-for list="{{ tones }}" as="t" hint-placeholder-count="12">
+<div data-tone="1" style="{{ t.panel }}" style-hover="flex:6 1 0">
+<div style="{{ t.depth }}"></div>
+<div data-tnum="1" style="{{ t.num }}">{{ t.roman }}</div>
+<div data-tlabel="1" style="{{ t.label }}"><span style="writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Libre Caslon Display',serif;font-size:clamp(15px,1.5vw,20px);white-space:nowrap">{{ t.name }}</span></div>
+<div data-tdetail="1" style="position:absolute;inset:0;opacity:0;transition:opacity .45s .1s;pointer-events:none">
+<div style="{{ t.scrim }}"></div>
+<div style="position:absolute;inset:0;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;min-width:220px">
+<div style="display:flex;align-items:center;gap:10px">
+<span style="{{ t.chip }}"></span>
+<span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase">{{ t.hex }}</span>
 </div>
-<p style="margin:16px 0 0;font-size:14px;color:var(--ink2)">Monochromatic tones are stronger in earlier samples, muted tones more visible later. Swatches are illustrative; the measured distributions are in Figure S5.</p>
+<div style="font-family:'Libre Caslon Display',serif;font-size:clamp(28px,3.2vw,42px);line-height:1;margin-top:14px">{{ t.name }}</div>
+<p style="margin:10px 0 0;font-size:14.5px;line-height:1.45;max-width:30ch">{{ t.desc }}</p>
+<div style="{{ t.trendStyle }}">{{ t.trend }}</div>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+<p style="margin:16px 0 0;font-size:14px;color:var(--ink2)">Twelve tonal categories recur across the six periods. Hover a band for its register. Swatches are illustrative; the measured distributions are in Figure S5.</p>
 </section>
 
 <section id="findings" style="scroll-margin-top:96px;padding:110px 0 0" data-reveal="1">
@@ -244,41 +287,87 @@ a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px
 <p style="margin:0 0 40px;color:var(--ink2);max-width:62ch">The patterns below describe model generated annotations within the sampled corpus. Each card opens the interactive figure behind it.</p>
 <div onClick="{{ onFindingClick }}" data-tilt="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
 <article style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="height:66px;display:flex;align-items:center;gap:12px">
+<span style="width:34px;height:34px;border:1.5px solid var(--acc);animation:morph 7s ease-in-out infinite"></span>
+<span style="width:24px;height:24px;border:1.5px solid var(--ink2);border-radius:50%;animation:swell 7s ease-in-out .6s infinite"></span>
+<span style="width:14px;height:14px;background:var(--acc);opacity:.5;animation:swell 7s ease-in-out 1.2s infinite"></span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Form and scale</div>
 <p style="margin:0">Natural forms remain prominent, while geometric and irregular forms become more frequent in later samples; reduced scales also become more visible over time.</p>
 <button data-fig="S2" style="margin-top:auto;align-self:flex-start;background:none;border:none;border-bottom:1px solid var(--rule);padding:4px 0;font:inherit;font-size:14px;color:var(--ink);cursor:pointer">Open Figures S2 and S3 →</button>
 </article>
 <article style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="height:66px;display:flex;align-items:center">
+<span style="width:38px;height:38px;border-radius:50%;background:#D9401F;mix-blend-mode:multiply;animation:swayA 9s ease-in-out infinite"></span>
+<span style="width:38px;height:38px;border-radius:50%;background:#F0A81E;margin-left:-14px;mix-blend-mode:multiply;animation:swayB 9s ease-in-out .8s infinite"></span>
+<span style="width:38px;height:38px;border-radius:50%;background:#243A56;margin-left:-14px;mix-blend-mode:multiply;opacity:.85;animation:swayA 9s ease-in-out 1.6s infinite"></span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Color</div>
 <p style="margin:0">Color distributions show broad temporal variation, with monochromatic tones stronger in earlier samples and muted tones more visible later.</p>
 <button data-fig="S4" style="margin-top:auto;align-self:flex-start;background:none;border:none;border-bottom:1px solid var(--rule);padding:4px 0;font:inherit;font-size:14px;color:var(--ink);cursor:pointer">Open Figures S4 and S5 →</button>
 </article>
 <article style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="height:66px;display:flex;align-items:center">
+<span style="position:relative;width:44px;height:44px;display:block">
+<span style="position:absolute;inset:0;border:1.5px solid var(--acc);border-radius:50%;animation:ripple 4s ease-out infinite"></span>
+<span style="position:absolute;inset:0;border:1.5px solid var(--acc);border-radius:50%;animation:ripple 4s ease-out 1.3s infinite"></span>
+<span style="position:absolute;inset:0;border:1.5px solid var(--ink2);border-radius:50%;animation:ripple 4s ease-out 2.6s infinite"></span>
+<span style="position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--acc)"></span>
+</span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Emotion</div>
 <p style="margin:0">CognArtive identifies more than twenty emotional themes, with positive and neutral interpretations occurring more frequently than negative ones.</p>
 <button data-fig="S6" style="margin-top:auto;align-self:flex-start;background:none;border:none;border-bottom:1px solid var(--rule);padding:4px 0;font:inherit;font-size:14px;color:var(--ink);cursor:pointer">Open Figures S6 and S7 →</button>
 </article>
 <article style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="height:66px;display:flex;align-items:center">
+<span style="position:relative;width:46px;height:46px;border-radius:50%;overflow:hidden;background:linear-gradient(100deg, var(--ink) 0 50%, var(--acc) 50% 100%);display:block">
+<span style="position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);animation:sweepX 3.6s ease-in-out infinite"></span>
+</span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Light and contrast</div>
 <p style="margin:0">Light and contrast are frequently associated with highlights, depth, and texture, while contrast, shadow, and chiaroscuro are common visual effects. Diffused and soft lighting appear frequently, and emphasis or directing attention are common inferred purposes across major styles.</p>
 <button data-fig="S8" style="margin-top:auto;align-self:flex-start;background:none;border:none;border-bottom:1px solid var(--rule);padding:4px 0;font:inherit;font-size:14px;color:var(--ink);cursor:pointer">Open Figures S8 to S11 →</button>
 </article>
 <article style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="height:66px;display:flex;flex-direction:column;justify-content:center;gap:7px;overflow:hidden">
+<span style="height:2px;width:30px;border-radius:2px;background:var(--acc);animation:trail 2.6s ease-in-out infinite"></span>
+<span style="height:2px;width:44px;border-radius:2px;background:var(--ink2);animation:trail 2.6s ease-in-out .35s infinite"></span>
+<span style="height:2px;width:22px;border-radius:2px;background:var(--acc);opacity:.6;animation:trail 2.6s ease-in-out .7s infinite"></span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Movement</div>
 <p style="margin:0">Conveyed and implied movement occur more frequently than literal movement.</p>
 <button data-fig="S12" style="margin-top:auto;align-self:flex-start;background:none;border:none;border-bottom:1px solid var(--rule);padding:4px 0;font:inherit;font-size:14px;color:var(--ink);cursor:pointer">Open Figure S12 →</button>
 </article>
 <article style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="height:66px;display:flex;align-items:center">
+<span style="width:70px;height:44px;border-radius:6px;background-image:repeating-linear-gradient(58deg, var(--acc) 0 2px, transparent 2px 9px), repeating-linear-gradient(-58deg, var(--ink2) 0 1.5px, transparent 1.5px 11px);background-size:24px 100%;opacity:.75;animation:hatchShift 5s linear infinite;display:block"></span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Material and technique</div>
 <p style="margin:0">Oil and canvas dominate material descriptions, while other media show distinct temporal patterns. Blending and layering are among the most frequent techniques, alongside variations in brushwork, line, crosshatching, scraping, and pointillism.</p>
 <button data-fig="S13" style="margin-top:auto;align-self:flex-start;background:none;border:none;border-bottom:1px solid var(--rule);padding:4px 0;font:inherit;font-size:14px;color:var(--ink);cursor:pointer">Open Figures S13 and S14 →</button>
 </article>
 <article style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="height:66px;display:flex;align-items:center">
+<span style="position:relative;width:54px;height:44px;display:block;border-bottom:1.5px solid var(--rule)">
+<span style="position:absolute;left:50%;bottom:0;width:1.5px;height:26px;background:var(--acc);transform-origin:50% 100%;animation:pendulum 6s ease-in-out infinite"></span>
+<span style="position:absolute;left:50%;bottom:-3px;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:var(--acc)"></span>
+<span style="position:absolute;left:2px;bottom:6px;width:5px;height:5px;border-radius:50%;background:var(--ink2);opacity:.55"></span>
+<span style="position:absolute;right:2px;bottom:6px;width:5px;height:5px;border-radius:50%;background:var(--ink2);opacity:.55"></span>
+</span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Time and figures</div>
 <p style="margin:0">Morning and afternoon are common temporal cues, while human figures dominate the represented subjects.</p>
 <button data-fig="S15" style="margin-top:auto;align-self:flex-start;background:none;border:none;border-bottom:1px solid var(--rule);padding:4px 0;font:inherit;font-size:14px;color:var(--ink);cursor:pointer">Open Figures S15 and S16 →</button>
 </article>
 <article style="background:var(--ink);color:var(--paper);border:1px solid var(--ink);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:12px">
+<div style="height:66px;display:flex;align-items:flex-end;gap:6px">
+<span style="width:8px;height:18px;border-radius:2px;background:var(--acc);opacity:.45;animation:blink 3.4s ease-in-out infinite"></span>
+<span style="width:8px;height:28px;border-radius:2px;background:var(--acc);opacity:.6;animation:blink 3.4s ease-in-out .3s infinite"></span>
+<span style="width:8px;height:38px;border-radius:2px;background:var(--acc);opacity:.8;animation:blink 3.4s ease-in-out .6s infinite"></span>
+<span style="width:8px;height:44px;border-radius:2px;background:var(--acc);animation:blink 3.4s ease-in-out .9s infinite"></span>
+<span style="width:8px;height:32px;border-radius:2px;background:var(--acc);opacity:.7;animation:blink 3.4s ease-in-out 1.2s infinite"></span>
+</div>
 <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Human evaluation</div>
 <p style="margin:0;opacity:.85">Three annotators rated 100 randomly sampled artworks across ten criteria: a mean of 4.33 out of 5, with 87.4% of 3,000 ratings scored 4 or 5.</p>
 <a href="#alignment" style="margin-top:auto;font-size:14px;color:var(--acc)">See the full ratings →</a>
@@ -290,41 +379,167 @@ a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px
 <div style="font-family:'Libre Caslon Display',serif;font-size:15px;color:var(--acc)">05</div>
 <h2 style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:clamp(34px,4.4vw,58px);line-height:1.02;margin:8px 0 14px">Semantic alignment</h2>
 <p style="margin:0 0 34px;color:var(--ink2);max-width:64ch">Median cosine similarity between CognArtive descriptions and established art style descriptions, across four embedding models. Techniques show the strongest aggregate alignment, followed by Movement and Material.</p>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:26px;align-items:start">
-<div style="overflow-x:auto;background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:8px 20px 18px">
-<table style="width:100%;border-collapse:collapse;font-size:15px;min-width:400px">
-<thead><tr style="text-align:right;color:var(--ink2);font-size:12px;letter-spacing:.1em;text-transform:uppercase"><th style="text-align:left;padding:14px 8px;font-weight:500">Focus</th><th style="padding:14px 8px;font-weight:500">SBERT</th><th style="padding:14px 8px;font-weight:500">BGE</th><th style="padding:14px 8px;font-weight:500">OpenAI</th><th style="padding:14px 8px;font-weight:500">NV</th><th style="padding:14px 8px;font-weight:600;color:var(--acc)">Agg.</th></tr></thead>
-<tbody>
-<tr style="text-align:right;border-top:1px solid var(--rule)"><td style="text-align:left;padding:12px 8px;font-weight:600">Form and Scale</td><td style="padding:12px 8px">0.44</td><td style="padding:12px 8px">0.62</td><td style="padding:12px 8px">0.39</td><td style="padding:12px 8px">0.61</td><td style="padding:12px 8px;font-weight:700;background:linear-gradient(to right, var(--glow) 51%, transparent 51%)">0.51</td></tr>
-<tr style="text-align:right;border-top:1px solid var(--rule)"><td style="text-align:left;padding:12px 8px;font-weight:600">Colors</td><td style="padding:12px 8px">0.41</td><td style="padding:12px 8px">0.61</td><td style="padding:12px 8px">0.40</td><td style="padding:12px 8px">0.59</td><td style="padding:12px 8px;font-weight:700;background:linear-gradient(to right, var(--glow) 48%, transparent 48%)">0.48</td></tr>
-<tr style="text-align:right;border-top:1px solid var(--rule)"><td style="text-align:left;padding:12px 8px;font-weight:600">Light and Contrast</td><td style="padding:12px 8px">0.41</td><td style="padding:12px 8px">0.61</td><td style="padding:12px 8px">0.37</td><td style="padding:12px 8px">0.52</td><td style="padding:12px 8px;font-weight:700;background:linear-gradient(to right, var(--glow) 46%, transparent 46%)">0.46</td></tr>
-<tr style="text-align:right;border-top:1px solid var(--rule)"><td style="text-align:left;padding:12px 8px;font-weight:600">Movement</td><td style="padding:12px 8px">0.44</td><td style="padding:12px 8px">0.61</td><td style="padding:12px 8px">0.39</td><td style="padding:12px 8px">0.63</td><td style="padding:12px 8px;font-weight:700;background:linear-gradient(to right, var(--glow) 57%, transparent 57%)">0.57</td></tr>
-<tr style="text-align:right;border-top:1px solid var(--rule)"><td style="text-align:left;padding:12px 8px;font-weight:600">Material</td><td style="padding:12px 8px">0.44</td><td style="padding:12px 8px">0.62</td><td style="padding:12px 8px">0.43</td><td style="padding:12px 8px">0.64</td><td style="padding:12px 8px;font-weight:700;background:linear-gradient(to right, var(--glow) 56%, transparent 56%)">0.56</td></tr>
-<tr style="text-align:right;border-top:1px solid var(--rule)"><td style="text-align:left;padding:12px 8px;font-weight:600;color:var(--acc)">Techniques</td><td style="padding:12px 8px">0.50</td><td style="padding:12px 8px">0.65</td><td style="padding:12px 8px">0.47</td><td style="padding:12px 8px">0.70</td><td style="padding:12px 8px;font-weight:700;background:linear-gradient(to right, var(--glow) 61%, transparent 61%)">0.61</td></tr>
-</tbody>
-</table>
-<p style="margin:12px 8px 0;font-size:13px;color:var(--ink2)">Agg. reports the median after aggregation across embedding models.</p>
+<div onMouseLeave="{{ clearCell }}" style="background:var(--card);border:1px solid var(--rule);border-radius:20px;padding:26px;box-shadow:0 14px 44px var(--shadow);margin-bottom:26px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;align-items:end;padding-bottom:22px;border-bottom:1px solid var(--rule)">
+<div>
+<div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">{{ readTag }}</div>
+<div style="font-family:'Libre Caslon Display',serif;font-size:clamp(24px,3vw,34px);line-height:1.1;margin-top:8px">{{ readTitle }}</div>
+<p style="margin:8px 0 0;font-size:14.5px;color:var(--ink2);max-width:44ch">{{ readNote }}</p>
 </div>
-<div style="background:var(--card);border:1px solid var(--rule);border-radius:18px;padding:24px">
-<div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Human evaluation · 3 annotators · 100 artworks</div>
-<div style="display:grid;gap:9px;margin-top:18px">
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q1</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="87" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.37</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q2</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="85" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.33</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q3</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="86" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.35</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q4</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="79" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.15</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q5</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="86" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.35</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q6</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="86.5" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.36</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q7</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="83" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.29</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q8</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="86" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.35</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q9</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="86" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.35</span></div>
-<div style="display:grid;grid-template-columns:34px 1fr 46px;gap:12px;align-items:center;font-size:13.5px"><span style="color:var(--ink2)">Q10</span><span style="height:8px;border-radius:99px;background:var(--rule);position:relative;overflow:hidden"><span data-bar="88" style="position:absolute;top:0;bottom:0;left:0;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></span><span style="text-align:right;font-weight:600">4.38</span></div>
+<div style="display:flex;align-items:center;gap:14px;justify-self:end">
+<span style="font-size:12px;color:var(--ink2)">0.37</span>
+<span style="width:clamp(120px,18vw,200px);height:10px;border-radius:99px;background:linear-gradient(to right, color-mix(in srgb, var(--acc) 12%, transparent), var(--acc))"></span>
+<span style="font-size:12px;color:var(--ink2)">0.70</span>
 </div>
-<p style="margin:18px 0 0;font-size:14px;color:var(--ink2)">Q10, on usefulness for understanding or discussing an artwork, receives the highest mean. Movement (Q4) receives the lowest, while still scoring 4 or 5 in 82.0% of responses.</p>
 </div>
+<div onMouseOver="{{ onCellHover }}" style="display:grid;grid-template-columns:minmax(120px,1.5fr) repeat(4, minmax(56px,1fr)) minmax(88px,1.2fr);gap:6px;margin-top:20px">
+<div></div>
+<sc-for list="{{ models }}" as="m" hint-placeholder-count="4">
+<div style="{{ m.style }}">{{ m.short }}</div>
+</sc-for>
+<div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);text-align:center;padding-bottom:8px">Aggregate</div>
+<sc-for list="{{ matrix }}" as="row" hint-placeholder-count="6">
+<div style="{{ row.labelStyle }}">{{ row.name }}</div>
+<sc-for list="{{ row.cells }}" as="c" hint-placeholder-count="4">
+<div data-cell="{{ c.key }}" style="{{ c.style }}">{{ c.value }}</div>
+</sc-for>
+<div style="{{ row.aggStyle }}"><span style="{{ row.aggFill }}"></span><span style="position:relative;font-weight:700;font-size:14.5px">{{ row.agg }}</span></div>
+</sc-for>
+</div>
+<p style="margin:18px 0 0;font-size:13.5px;color:var(--ink2)">Aggregate reports the median after aggregation across embedding models. BGE M3 and NV Embed v2 return consistently higher similarities than Sentence BERT and OpenAI for every dimension, so the choice of embedding space shifts the absolute values more than the ranking between dimensions.</p>
+</div>
+<div style="background:var(--card);border:1px solid var(--rule);border-radius:20px;padding:28px;box-shadow:0 14px 44px var(--shadow)">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;align-items:end;padding-bottom:24px;border-bottom:1px solid var(--rule)">
+<div>
+<div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Human evaluation</div>
+<h3 style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:clamp(26px,3vw,38px);margin:8px 0 0">Ten questions, three annotators</h3>
+<p style="margin:8px 0 0;font-size:14.5px;color:var(--ink2);max-width:44ch">Each annotator rated all 100 randomly sampled artworks on a five point Likert scale, producing 3,000 individual ratings.</p>
+</div>
+<div style="display:flex;gap:28px;justify-self:end">
+<div><div style="font-family:'Libre Caslon Display',serif;font-size:44px;line-height:1;color:var(--acc)">4.33<span style="font-size:20px;color:var(--ink2)">/5</span></div><div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-top:6px">Overall mean</div></div>
+<div><div style="font-family:'Libre Caslon Display',serif;font-size:44px;line-height:1">87.4<span style="font-size:20px;color:var(--ink2)">%</span></div><div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-top:6px">Rated 4 or 5</div></div>
+</div>
+</div>
+<div data-tilt="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:24px">
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="display:flex;align-items:center;gap:8px"><span style="width:20px;height:20px;border:1.5px solid var(--acc);animation:morph 7s ease-in-out infinite"></span><span style="width:12px;height:12px;border:1.5px solid var(--ink2);border-radius:50%;animation:swell 7s ease-in-out .5s infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q1</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The description of form and scale accurately matches what I see in the artwork.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.37</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.69</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="90" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">90.0% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="display:flex;align-items:center"><span style="width:20px;height:20px;border-radius:50%;background:#D9401F;mix-blend-mode:multiply;animation:swayA 9s ease-in-out infinite"></span><span style="width:20px;height:20px;border-radius:50%;background:#F0A81E;margin-left:-7px;mix-blend-mode:multiply;animation:swayB 9s ease-in-out .7s infinite"></span><span style="width:20px;height:20px;border-radius:50%;background:#243A56;margin-left:-7px;mix-blend-mode:multiply;opacity:.85;animation:swayA 9s ease-in-out 1.4s infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q2</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The description of colors accurately matches the colors I see in the artwork.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.33</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.72</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="88.7" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">88.7% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="position:relative;width:26px;height:26px;border-radius:50%;overflow:hidden;background:linear-gradient(100deg, var(--ink) 0 50%, var(--acc) 50% 100%);display:block"><span style="position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);animation:sweepX 3.6s ease-in-out infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q3</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The description of light and contrast accurately reflects the lighting and contrast in the artwork.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.35</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.71</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="88.7" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">88.7% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--acc);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="display:flex;flex-direction:column;gap:5px;width:30px;overflow:hidden"><span style="height:2px;width:18px;border-radius:2px;background:var(--acc);animation:trail 2.6s ease-in-out infinite"></span><span style="height:2px;width:26px;border-radius:2px;background:var(--ink2);animation:trail 2.6s ease-in-out .35s infinite"></span><span style="height:2px;width:14px;border-radius:2px;background:var(--acc);opacity:.6;animation:trail 2.6s ease-in-out .7s infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Q4 · lowest</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The description of movement (conveyed, implied, or actual) feels appropriate for this artwork.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.15</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.72</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="82" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">82.0% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="position:relative;width:30px;height:24px;display:block"><span style="position:absolute;left:0;top:0;width:26px;height:7px;border-radius:2px;background:#9A7B4F;animation:swayB 8s ease-in-out infinite"></span><span style="position:absolute;left:2px;top:9px;width:26px;height:7px;border-radius:2px;background:var(--acc);opacity:.7;animation:swayA 8s ease-in-out .6s infinite"></span><span style="position:absolute;left:0;top:18px;width:26px;height:6px;border-radius:2px;background:var(--ink2);opacity:.5;animation:swayB 8s ease-in-out 1.2s infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q5</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The description of materials (oil, canvas, etc.) is plausible given what I can see.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.35</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.79</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="85.3" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">85.3% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="width:32px;height:24px;border-radius:4px;background-image:repeating-linear-gradient(58deg, var(--acc) 0 2px, transparent 2px 8px), repeating-linear-gradient(-58deg, var(--ink2) 0 1.5px, transparent 1.5px 10px);background-size:22px 100%;opacity:.75;animation:hatchShift 5s linear infinite;display:block"></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q6</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The description of techniques (brushwork, layering, pointillism, etc.) is consistent with the visual evidence.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.36</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.71</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="89" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">89.0% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="position:relative;width:26px;height:26px;display:block"><span style="position:absolute;inset:0;border:1.5px solid var(--acc);border-radius:50%;animation:ripple 4s ease-out infinite"></span><span style="position:absolute;inset:0;border:1.5px solid var(--ink2);border-radius:50%;animation:ripple 4s ease-out 2s infinite"></span><span style="position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--acc)"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q7</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The emotional expression or mood described by the model feels reasonable for this artwork.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.29</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.77</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="85" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">85.0% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="position:relative;width:26px;height:26px;display:block"><span style="position:absolute;inset:0;border:1.5px solid var(--ink2);border-radius:3px;animation:swell 6s ease-in-out infinite"></span><span style="position:absolute;inset:7px;border:1.5px solid var(--acc);border-radius:2px;animation:swell 6s ease-in-out .8s infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q8</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">Overall, the set of descriptions gives a coherent and useful interpretation of the artwork.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.35</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.73</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="88" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">88.0% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--rule);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;transition:transform .35s ease,border-color .35s" style-hover="border-color:var(--acc)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="position:relative;width:34px;height:24px;display:block"><span style="position:absolute;left:0;top:2px;width:20px;height:20px;border:1.5px solid var(--ink2);border-radius:50%;animation:swayA 10s ease-in-out infinite"></span><span style="position:absolute;right:0;top:2px;width:20px;height:20px;border:1.5px solid var(--acc);border-radius:50%;animation:swayB 10s ease-in-out .9s infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)">Q9</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">The descriptions are consistent with what I would expect for the artwork's recorded art style.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.35</span><span style="font-size:12.5px;color:var(--ink2)">SD 0.72</span></div>
+<div style="height:6px;border-radius:99px;background:var(--paper2);overflow:hidden"><span data-bar="89.7" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;color:var(--ink2)">89.7% rated 4 or 5</div>
+</article>
+
+<article style="border:1px solid var(--acc);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:12px;background:var(--ink);color:var(--paper);transition:transform .35s ease">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+<span style="display:flex;align-items:flex-end;gap:3px"><span style="width:5px;height:10px;border-radius:2px;background:var(--acc);opacity:.5;animation:blink 3.4s ease-in-out infinite"></span><span style="width:5px;height:16px;border-radius:2px;background:var(--acc);opacity:.7;animation:blink 3.4s ease-in-out .3s infinite"></span><span style="width:5px;height:22px;border-radius:2px;background:var(--acc);animation:blink 3.4s ease-in-out .6s infinite"></span><span style="width:5px;height:14px;border-radius:2px;background:var(--acc);opacity:.6;animation:blink 3.4s ease-in-out .9s infinite"></span></span>
+<span style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)">Q10 · highest</span>
+</div>
+<p style="margin:0;font-size:14.5px;line-height:1.45">These AI generated descriptions would help me (or a student/curator) better understand or discuss the artwork.</p>
+<div style="margin-top:auto;display:flex;align-items:baseline;gap:10px"><span style="font-family:'Libre Caslon Display',serif;font-size:30px;line-height:1">4.38</span><span style="font-size:12.5px;opacity:.72">SD 0.76</span></div>
+<div style="height:6px;border-radius:99px;background:rgba(246,242,234,.18);overflow:hidden"><span data-bar="87.7" style="display:block;height:6px;width:0;background:var(--acc);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)"></span></div>
+<div style="font-size:12px;opacity:.72">87.7% rated 4 or 5</div>
+</article>
+
+</div>
+<p style="margin:22px 0 0;font-size:14px;color:var(--ink2);max-width:88ch">Annotators differed in how they used the scale: their grand means were 4.16, 4.62 and 4.20, and a Friedman test indicates a systematic difference in rating levels between them. Across annotator pairs, 85.1% of ratings differ by at most one scale point, while exact agreement is 37.9%.</p>
 </div>
 </section>
 
-<section id="corpus" style="scroll-margin-top:96px;padding:110px 0 0" data-reveal="1">
+<section id="corpus" style="position:relative;scroll-margin-top:96px;padding:110px 0 0" data-reveal="1">
+<canvas ref="{{ corpusRef }}" style="position:absolute;right:-4%;top:60px;width:min(56%,620px);height:calc(100% - 60px);pointer-events:none;z-index:0;-webkit-mask-image:linear-gradient(to right, transparent, #000 34%, #000 88%, transparent);mask-image:linear-gradient(to right, transparent, #000 34%, #000 88%, transparent)"></canvas>
+<div style="position:relative;z-index:1">
 <div style="font-family:'Libre Caslon Display',serif;font-size:15px;color:var(--acc)">06</div>
 <h2 style="font-family:'Libre Caslon Display',serif;font-weight:400;font-size:clamp(34px,4.4vw,58px);line-height:1.02;margin:8px 0 14px">The corpus</h2>
 <p style="margin:0 0 24px;color:var(--ink2);max-width:64ch">23 artists and 34 recorded styles from WikiArt. Since the collection emphasizes historically prominent artists, our analyses describe this corpus rather than art history as a whole.</p>
@@ -344,6 +559,7 @@ a:hover{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px
 <sc-for list="{{ filteredStyles }}" as="s" hint-placeholder-count="16">
 <span style="padding:7px 14px;border:1px solid var(--rule);border-radius:999px;font-size:14.5px;background:var(--card);transition:border-color .25s,transform .25s" style-hover="border-color:var(--acc);transform:translateY(-2px)">{{ s }}</span>
 </sc-for>
+</div>
 </div>
 </div>
 </div>
@@ -467,6 +683,37 @@ const QS = [
    terms:['human','animal','mythological','abstract','nostalgia','serenity','melancholy'], align:null, rating:4.29, alignNote:'Not part of the semantic comparison; rating covers emotional expression', figs:['S6','S7','S16'], count:'20+ themes', hue:280}
 ];
 
+const MODELS = [
+  {short:'SBERT', full:'Sentence BERT'},
+  {short:'BGE', full:'BGE M3'},
+  {short:'OpenAI', full:'OpenAI embeddings'},
+  {short:'NV', full:'NVIDIA NV Embed v2'}
+];
+
+const ALIGN = [
+  {name:'Form and Scale', v:[0.44,0.62,0.39,0.61], agg:0.51},
+  {name:'Colors', v:[0.41,0.61,0.40,0.59], agg:0.48},
+  {name:'Light and Contrast', v:[0.41,0.61,0.37,0.52], agg:0.46},
+  {name:'Movement', v:[0.44,0.61,0.39,0.63], agg:0.57},
+  {name:'Material', v:[0.44,0.62,0.43,0.64], agg:0.56},
+  {name:'Techniques', v:[0.50,0.65,0.47,0.70], agg:0.61}
+];
+
+const TONES = [
+  {name:'light', hex:'#F2ECDF', dark:false, desc:'High-key surfaces where the whole field sits near white and shadow does little work.'},
+  {name:'monochromatic', hex:'#B9B2A6', dark:false, desc:'One hue carrying the whole image, value alone doing the separating.', trend:'Stronger in earlier samples'},
+  {name:'earthy', hex:'#9A7B4F', dark:true, desc:'Ochres, umbers and clays: the pigment palette of ground minerals.'},
+  {name:'rich', hex:'#7B3B2B', dark:true, desc:'Saturated and heavy, colour laid deep enough to read as weight.'},
+  {name:'vibrant', hex:'#D9401F', dark:true, desc:'Colour pushed to its loudest register, held at full intensity.'},
+  {name:'muted', hex:'#8E8B7A', dark:true, desc:'Chroma pulled back toward grey, tones speaking under their breath.', trend:'More visible in later samples'},
+  {name:'dark', hex:'#2C2822', dark:true, desc:'The low end of the scale, where form emerges only where light lands.'},
+  {name:'vivid', hex:'#F0A81E', dark:false, desc:'Clear, unmixed brilliance — colour that reads before the subject does.'},
+  {name:'bright', hex:'#F6E7B4', dark:false, desc:'Luminous without being saturated: light described rather than pigment.'},
+  {name:'deep', hex:'#243A56', dark:true, desc:'Dense values with colour still present in the shadow, not merely black.'},
+  {name:'soft', hex:'#CFC3B4', dark:false, desc:'Gentle transitions, edges and contrasts both held down.'},
+  {name:'pastel', hex:'#EBC7CD', dark:false, desc:'Hue lightened toward white, chroma kept but strength given away.'}
+];
+
 const EMOTIONS = ['nostalgia','dramatic expression','energy','calm','serenity','hope','melancholy','fear','grief','love','passion','sadness','joy','despair','anger','anxiety','tension','wonder','longing','solitude'];
 
 const ARTISTS = ['Salvador Dali','Wassily Kandinsky','Henri Matisse','Pablo Picasso','Rene Magritte','Egon Schiele','Gustav Klimt','Rembrandt','Paul Gauguin','Vincent van Gogh','Paul Cezanne','Leonardo da Vinci','M.C. Escher','Pierre-Auguste Renoir','Claude Monet','Edgar Degas','John Singer Sargent','Frida Kahlo','Edward Hopper','Francisco Goya','Gustave Dore','John Constable','Zdzislaw Beksinski'];
@@ -474,7 +721,7 @@ const ARTISTS = ['Salvador Dali','Wassily Kandinsky','Henri Matisse','Pablo Pica
 const STYLES = ['Abstract','Abstract Art','Abstract Expressionism','Analytical Cubism','Art Deco','Art Nouveau','Baroque','Cloisonnism','Cubism','Dada','Divisionism','Early Renaissance','Expressionism','Fauvism','High Renaissance','Impressionism','Japonism','Metaphysical art','Naïve Art','Neo-baroque','Neoclassicism','Neo-Impressionism','New Realism','Op Art','Orientalism','Pointillism','Post-Impressionism','Realism','Romanticism','Social Realism','Surrealism','Symbolism','Synthetic Cubism','Tenebrism'];
 
 class Component extends DCLogic {
-  state = { theme: 'light', q: '', viewer: -1, qi: 0, pinned: false, filter: 'All' };
+  state = { theme: 'light', q: '', viewer: -1, qi: 0, pinned: false, filter: 'All', cell: null };
 
   componentDidMount() {
     let t = 'light';
@@ -487,6 +734,9 @@ class Component extends DCLogic {
     this._emotions();
     this._tilt();
     this._shelf();
+    this._tones();
+    this._corpus();
+    this._welcome();
 
     this._onScroll = () => {
       const h = document.documentElement;
@@ -524,16 +774,19 @@ class Component extends DCLogic {
     if (this._hero) this._hero.removeEventListener('mousemove', this._onMove);
     clearInterval(this._spin);
     cancelAnimationFrame(this._raf);
+    cancelAnimationFrame(this._corpusRaf);
+    cancelAnimationFrame(this._welcomeRaf);
   }
 
-  componentDidUpdate(pp, ps) {
+  componentDidUpdate(pp, prevState) {
+    const ps = prevState || {};
     if (ps.filter !== this.state.filter && this._resetShelf) this._resetShelf();
     if (ps.qi !== this.state.qi && this._panel) {
       const els = [this._panel].concat(Array.from(this._panel.querySelectorAll('[data-stagger]')));
       els.forEach((el, i) => {
         el.style.animation = 'none';
         void el.offsetWidth;
-        el.style.animation = 'fadeUp .55s ' + (i * 0.045).toFixed(3) + 's cubic-bezier(.2,.8,.2,1) both';
+        el.style.animation = 'softIn 1.15s ' + (i * 0.02).toFixed(3) + 's ease-in-out both';
       });
     }
   }
@@ -595,11 +848,13 @@ class Component extends DCLogic {
       const n = cs.length;
       if (!n) return;
       const avail = el.clientWidth - GAP * (n - 1);
-      const even = Math.max(26, avail / n);
+      const MIN = 22;
+      const even = Math.max(MIN, avail / n);
       let big = 0, small = even;
       if (active) {
-        big = Math.min(460, Math.max(260, avail * 0.46));
-        small = Math.max(26, (avail - big) / (n - 1));
+        const room = avail - (n - 1) * MIN;
+        big = Math.max(160, Math.min(460, avail * 0.46, room));
+        small = Math.max(MIN, (avail - big) / (n - 1));
       }
       cs.forEach(c => {
         const on = c === active;
@@ -623,6 +878,320 @@ class Component extends DCLogic {
     setTimeout(() => layout(null), 400);
   }
 
+  _tones() {
+    const el = this._toneEl;
+    if (!el) return;
+    const panels = () => Array.from(el.querySelectorAll('[data-tone]'));
+    const paint = (active) => {
+      panels().forEach(p => {
+        const on = p === active;
+        p.style.filter = active && !on ? 'saturate(.6) brightness(.95)' : 'none';
+        const lab = p.querySelector('[data-tlabel]');
+        const num = p.querySelector('[data-tnum]');
+        const det = p.querySelector('[data-tdetail]');
+        if (lab) lab.style.opacity = on ? '0' : '1';
+        if (num) num.style.opacity = on ? '0' : '.62';
+        if (det) det.style.opacity = on ? '1' : '0';
+      });
+    };
+    el.addEventListener('mouseover', (e) => {
+      const p = e.target.closest && e.target.closest('[data-tone]');
+      if (p) paint(p);
+    });
+    el.addEventListener('mouseleave', () => paint(null));
+    paint(null);
+  }
+
+  _davidSeeds(cb) {
+    if (this._seeds && this._david) { cb(this._seeds, this._seedAr, this._david); return; }
+    if (this._seedWaiting) { this._seedWaiting.push(cb); return; }
+    this._seedWaiting = [cb];
+    const img = new Image();
+    img.src = 'assets/david.png';
+    img.onload = () => {
+      const SW = 190, SH = Math.round(SW * img.height / img.width);
+      const off = document.createElement('canvas');
+      off.width = SW; off.height = SH;
+      const octx = off.getContext('2d');
+      octx.drawImage(img, 0, 0, SW, SH);
+      const d = octx.getImageData(0, 0, SW, SH).data;
+      const lumAt = (x, y) => {
+        const i = (y * SW + x) * 4;
+        return 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2];
+      };
+      const seeds = [];
+      for (let y = 1; y < SH - 1; y++) {
+        for (let x = 1; x < SW - 1; x++) {
+          const gx = -lumAt(x - 1, y - 1) - 2 * lumAt(x - 1, y) - lumAt(x - 1, y + 1)
+            + lumAt(x + 1, y - 1) + 2 * lumAt(x + 1, y) + lumAt(x + 1, y + 1);
+          const gy = -lumAt(x - 1, y - 1) - 2 * lumAt(x, y - 1) - lumAt(x + 1, y - 1)
+            + lumAt(x - 1, y + 1) + 2 * lumAt(x, y + 1) + lumAt(x + 1, y + 1);
+          const m = Math.sqrt(gx * gx + gy * gy);
+          if (m > 62 && Math.random() < 0.5) seeds.push({ u: x / SW, v: y / SH, m: Math.min(1, m / 320) });
+        }
+      }
+      for (let i = seeds.length - 1; i > 0; i--) {
+        const j = (Math.random() * (i + 1)) | 0;
+        const t = seeds[i]; seeds[i] = seeds[j]; seeds[j] = t;
+      }
+      const lum = new Float32Array(SW * SH);
+      for (let y = 0; y < SH; y++) for (let x = 0; x < SW; x++) lum[y * SW + x] = lumAt(x, y);
+      const mag = new Float32Array(SW * SH);
+      for (let y = 1; y < SH - 1; y++) {
+        for (let x = 1; x < SW - 1; x++) {
+          const gx = -lumAt(x - 1, y - 1) - 2 * lumAt(x - 1, y) - lumAt(x - 1, y + 1)
+            + lumAt(x + 1, y - 1) + 2 * lumAt(x + 1, y) + lumAt(x + 1, y + 1);
+          const gy = -lumAt(x - 1, y - 1) - 2 * lumAt(x, y - 1) - lumAt(x + 1, y - 1)
+            + lumAt(x - 1, y + 1) + 2 * lumAt(x, y + 1) + lumAt(x + 1, y + 1);
+          mag[y * SW + x] = Math.sqrt(gx * gx + gy * gy);
+        }
+      }
+      const bg = new Uint8Array(SW * SH);
+      const stack = [];
+      for (let x = 0; x < SW; x++) { stack.push(x, 0, x, SH - 1); }
+      for (let y = 0; y < SH; y++) { stack.push(0, y, SW - 1, y); }
+      while (stack.length) {
+        const y = stack.pop(), x = stack.pop();
+        if (x < 0 || y < 0 || x >= SW || y >= SH) continue;
+        const i = y * SW + x;
+        if (bg[i] || mag[i] > 30) continue;
+        bg[i] = 1;
+        stack.push(x + 1, y, x - 1, y, x, y + 1, x, y - 1);
+      }
+      const fig = new Uint8Array(SW * SH);
+      for (let i = 0; i < fig.length; i++) fig[i] = bg[i] ? 0 : 1;
+
+      this._seeds = seeds;
+      this._seedAr = SW / SH;
+      this._david = { SW, SH, mag, fig, lum, ar: SW / SH };
+      this._seedWaiting.forEach(fn => fn(seeds, SW / SH, this._david));
+      this._seedWaiting = null;
+    };
+  }
+
+  _welcome() {
+    const cv = this._welcomeEl;
+    if (!cv || cv._on) return;
+    cv._on = 1;
+    const ctx = cv.getContext('2d');
+
+    this._davidSeeds((seeds, ar, D) => {
+      const img = new Image();
+      img.src = 'assets/david.png';
+      const build = () => {
+        const HW = 380, HH = Math.round(HW / ar);
+        const off = document.createElement('canvas');
+        off.width = HW; off.height = HH;
+        const octx = off.getContext('2d');
+        octx.drawImage(img, 0, 0, HW, HH);
+        const px = octx.getImageData(0, 0, HW, HH).data;
+        const raw = new Float32Array(HW * HH);
+        for (let i = 0, p = 0; i < raw.length; i++, p += 4) {
+          raw[i] = 0.299 * px[p] + 0.587 * px[p + 1] + 0.114 * px[p + 2];
+        }
+        const blur = (src) => {
+          const tmp = new Float32Array(src.length), out = new Float32Array(src.length);
+          for (let y = 0; y < HH; y++) for (let x = 0; x < HW; x++) {
+            let s0 = 0, n = 0;
+            for (let d = -1; d <= 1; d++) { const xx = x + d; if (xx < 0 || xx >= HW) continue; s0 += src[y * HW + xx]; n++; }
+            tmp[y * HW + x] = s0 / n;
+          }
+          for (let y = 0; y < HH; y++) for (let x = 0; x < HW; x++) {
+            let s0 = 0, n = 0;
+            for (let d = -1; d <= 1; d++) { const yy = y + d; if (yy < 0 || yy >= HH) continue; s0 += tmp[yy * HW + x]; n++; }
+            out[y * HW + x] = s0 / n;
+          }
+          return out;
+        };
+        const F = blur(blur(blur(raw)));
+
+        const mask = new Uint8Array(HW * HH);
+        for (let y = 0; y < HH; y++) for (let x = 0; x < HW; x++) {
+          const sx = Math.min(D.SW - 1, (x * D.SW / HW) | 0);
+          const sy = Math.min(D.SH - 1, (y * D.SH / HH) | 0);
+          mask[y * HW + x] = D.fig[sy * D.SW + sx];
+        }
+
+        const hist = new Float64Array(256);
+        let total = 0;
+        for (let i = 0; i < F.length; i++) {
+          if (!mask[i]) continue;
+          hist[Math.max(0, Math.min(255, F[i] | 0))]++;
+          total++;
+        }
+        const cum = new Float64Array(256);
+        let run = 0;
+        for (let i = 0; i < 256; i++) { run += hist[i]; cum[i] = run / total; }
+        const LEVELS = 13;
+        const levels = [];
+        for (let k = 0; k < LEVELS; k++) {
+          const q = 0.05 + (k * (0.95 - 0.05)) / (LEVELS - 1);
+          let v = 0;
+          while (v < 255 && cum[v] < q) v++;
+          if (!levels.length || v > levels[levels.length - 1] + 0.6) levels.push(v);
+        }
+
+        const layers = levels.map((level, k) => {
+          const path = new Path2D();
+          const ip = (v1, v2) => (level - v1) / (v2 - v1 || 1e-6);
+          for (let y = 0; y < HH - 1; y++) {
+            for (let x = 0; x < HW - 1; x++) {
+              const i0 = y * HW + x, i1 = i0 + 1, i2 = i0 + HW + 1, i3 = i0 + HW;
+              if (!mask[i0] || !mask[i1] || !mask[i2] || !mask[i3]) continue;
+              const a0 = F[i0], a1 = F[i1], a2 = F[i2], a3 = F[i3];
+              let c = 0;
+              if (a0 > level) c |= 8;
+              if (a1 > level) c |= 4;
+              if (a2 > level) c |= 2;
+              if (a3 > level) c |= 1;
+              if (c === 0 || c === 15) continue;
+              const T = [x + ip(a0, a1), y], R = [x + 1, y + ip(a1, a2)];
+              const B = [x + ip(a3, a2), y + 1], L = [x, y + ip(a0, a3)];
+              const seg = (p, q) => { path.moveTo(p[0] / HW, p[1] / HH); path.lineTo(q[0] / HW, q[1] / HH); };
+              if (c === 1 || c === 14) seg(L, B);
+              else if (c === 2 || c === 13) seg(B, R);
+              else if (c === 3 || c === 12) seg(L, R);
+              else if (c === 4 || c === 11) seg(T, R);
+              else if (c === 6 || c === 9) seg(T, B);
+              else if (c === 7 || c === 8) seg(L, T);
+              else if (c === 5) { seg(L, T); seg(B, R); }
+              else if (c === 10) { seg(L, B); seg(T, R); }
+            }
+          }
+          return { path, k, level };
+        });
+        const N = layers.length;
+
+        let W = 0, H = 0, geom = null;
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        const resize = () => {
+          const r = cv.getBoundingClientRect();
+          W = r.width; H = r.height;
+          if (!W || !H) return;
+          cv.width = Math.floor(W * dpr); cv.height = Math.floor(H * dpr);
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          const s = Math.min(W / ar, H) * 1.02;
+          geom = { fw: s * ar, fh: s, fx: (W - s * ar) / 2, fy: (H - s) / 2 };
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        let mx = 0.5, my = 0.5;
+        cv.parentElement.addEventListener('mousemove', (e) => {
+          const r = cv.getBoundingClientRect();
+          mx = (e.clientX - r.left) / r.width;
+          my = (e.clientY - r.top) / r.height;
+        });
+        cv.parentElement.addEventListener('mouseleave', () => { mx = 0.5; my = 0.5; });
+
+        let cx = 0.5, cy = 0.5;
+        const draw = (t) => {
+          if (!geom) { resize(); this._welcomeRaf = requestAnimationFrame(draw); return; }
+          cx += (mx - cx) * 0.05; cy += (my - cy) * 0.05;
+          const dark = document.documentElement.dataset.theme === 'dark';
+          const ink = dark ? '236,229,216' : '26,22,18';
+          ctx.clearRect(0, 0, W, H);
+          const g = geom;
+          const breathe = 1 + Math.sin(t * 0.00035) * 0.2;
+          const stepX = ((cx - 0.5) * 26 + Math.sin(t * 0.00028) * 4) * breathe;
+          const stepY = ((cy - 0.5) * -18 - 5.2) * breathe;
+
+          for (const L of layers) {
+            const d = L.k - (N - 1) / 2;
+            ctx.save();
+            ctx.translate(g.fx + d * stepX, g.fy + d * stepY);
+            ctx.scale(g.fw, g.fh);
+            ctx.lineWidth = 0.95 / g.fw;
+            ctx.strokeStyle = 'rgba(' + ink + ',' + (0.26 + (L.k / (N - 1)) * 0.5).toFixed(3) + ')';
+            ctx.stroke(L.path);
+            ctx.restore();
+          }
+          this._welcomeRaf = requestAnimationFrame(draw);
+        };
+        this._welcomeRaf = requestAnimationFrame(draw);
+      };
+      if (img.complete && img.naturalWidth) build();
+      else img.onload = build;
+    });
+  }
+
+  _corpus() {
+    const cv = this._corpusEl;
+    if (!cv || cv._on) return;
+    cv._on = 1;
+    const ctx = cv.getContext('2d');
+
+    this._davidSeeds((seeds, ar) => {
+      const SW = 1, SH = 1 / ar;
+      const pts = seeds.slice(0, 2200).map(s => ({
+        u: s.u, v: s.v, m: s.m,
+        ph: Math.random() * Math.PI * 2,
+        sp: 0.4 + Math.random() * 1.1,
+        amp: 1.4 + Math.random() * 4.2,
+        dx: 0, dy: 0
+      }));
+
+      let W = 0, H = 0;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const resize = () => {
+        const r = cv.getBoundingClientRect();
+        W = r.width; H = r.height;
+        if (!W || !H) return;
+        cv.width = Math.floor(W * dpr); cv.height = Math.floor(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        let dw = H * ar, dh = H;
+        if (dw > W) { dw = W; dh = W / ar; }
+        this._corpusGeom = { W, H, ox: (W - dw) / 2, oy: (H - dh) / 2, dw, dh };
+      };
+      resize();
+      window.addEventListener('resize', resize);
+
+      let mx = -9999, my = -9999;
+      const sect = cv.parentElement;
+      if (sect) {
+        sect.addEventListener('mousemove', (e) => {
+          const r = cv.getBoundingClientRect();
+          mx = e.clientX - r.left; my = e.clientY - r.top;
+        });
+        sect.addEventListener('mouseleave', () => { mx = -9999; my = -9999; });
+      }
+
+      const draw = (t) => {
+        const dark = document.documentElement.dataset.theme === 'dark';
+        ctx.clearRect(0, 0, W, H);
+        const g = this._corpusGeom || { ox: 0, oy: 0, dw: W, dh: H };
+        const dot = dark ? '160,152,140' : '110,104,94';
+
+        for (const p of pts) {
+          const bx = g.ox + p.u * g.dw, by = g.oy + p.v * g.dh;
+          const wob = Math.sin(t * 0.00042 * p.sp + p.ph);
+          let x = bx + wob * p.amp, y = by + Math.cos(t * 0.00035 * p.sp + p.ph) * p.amp;
+          const ddx = x - mx, ddy = y - my, d2 = ddx * ddx + ddy * ddy;
+          if (d2 < 16000 && d2 > 1) {
+            const f = (1 - d2 / 16000) * 34;
+            x += (ddx / Math.sqrt(d2)) * f; y += (ddy / Math.sqrt(d2)) * f;
+          }
+          p.x = x; p.y = y;
+          ctx.fillStyle = 'rgba(' + dot + ',' + (0.16 + p.m * 0.5).toFixed(3) + ')';
+          ctx.fillRect(x, y, 1.25, 1.25);
+        }
+
+        ctx.strokeStyle = 'rgba(' + dot + ',0.09)';
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        for (let i = 0; i < pts.length; i += 3) {
+          const a = pts[i], b = pts[(i + 7) % pts.length];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          if (dx * dx + dy * dy < 620) { ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); }
+        }
+        ctx.stroke();
+
+        this._corpusRaf = requestAnimationFrame(draw);
+      };
+      this._corpusRaf = requestAnimationFrame(draw);
+    });
+  }
+
   _ticks(host) {
     const N = 120;
     for (let i = 0; i < N; i++) {
@@ -638,20 +1207,108 @@ class Component extends DCLogic {
 
   _emotions() {
     const host = this._emo;
-    if (!host) return;
+    if (!host || host._built) return;
+    host._built = 1;
+
+    const SENT = {
+      joy:'p', hope:'p', love:'p', serenity:'p', calm:'p', energy:'p', wonder:'p', passion:'p',
+      nostalgia:'n', longing:'n', solitude:'n', tension:'n', 'dramatic expression':'n',
+      melancholy:'g', grief:'g', fear:'g', sadness:'g', despair:'g', anger:'g', anxiety:'g'
+    };
+    const COL = { p:'#F2B33D', n:'#E8E0D2', g:'#8FA6C9' };
+    const cols = 5, rows = Math.ceil(EMOTIONS.length / cols);
+    const layers = [];
+
     EMOTIONS.forEach((w, i) => {
-      const s = document.createElement('span');
-      s.textContent = w;
-      const size = 15 + Math.random() * 34;
-      s.style.cssText = 'position:absolute;white-space:nowrap;font-family:"Libre Caslon Display",serif;'
-        + 'left:' + (Math.random() * 88).toFixed(2) + '%;top:' + (Math.random() * 78).toFixed(2) + '%;'
-        + 'font-size:' + size.toFixed(1) + 'px;opacity:' + (0.28 + Math.random() * 0.6).toFixed(2) + ';'
-        + 'color:' + (i % 4 === 0 ? 'var(--acc)' : 'inherit') + ';'
-        + 'animation:' + (i % 2 ? 'float1 ' : 'float2 ') + (11 + Math.random() * 13).toFixed(1) + 's ease-in-out ' + (Math.random() * 5).toFixed(1) + 's infinite;'
-        + 'transition:opacity .4s, transform .4s';
-      s.addEventListener('mouseenter', () => { s.style.opacity = '1'; });
-      host.appendChild(s);
+      const depth = 0.38 + Math.random() * 0.62;
+      const cx = ((i % cols) + 0.5) / cols * 100 + (Math.random() * 8 - 4);
+      const cy = ((Math.floor(i / cols)) + 0.5) / rows * 100 + (Math.random() * 8 - 4);
+      const outer = document.createElement('span');
+      outer.style.cssText = 'position:absolute;left:' + cx.toFixed(2) + '%;top:' + cy.toFixed(2) + '%;'
+        + 'transform:translate(-50%,-50%);will-change:transform;transition:transform .9s cubic-bezier(.2,.8,.2,1)';
+      const inner = document.createElement('span');
+      inner.textContent = w;
+      inner.style.cssText = 'display:inline-block;white-space:nowrap;cursor:default;'
+        + 'font-family:"Libre Caslon Display",serif;font-size:' + (14 + depth * 32).toFixed(1) + 'px;'
+        + 'color:' + COL[SENT[w] || 'n'] + ';opacity:' + (0.24 + depth * 0.66).toFixed(2) + ';'
+        + 'text-shadow:0 2px 22px rgba(0,0,0,.55);'
+        + 'animation:' + (i % 2 ? 'swayA ' : 'swayB ') + (13 + Math.random() * 14).toFixed(1) + 's ease-in-out '
+        + (Math.random() * 6).toFixed(1) + 's infinite;transition:opacity .45s,transform .45s,letter-spacing .45s';
+      outer.appendChild(inner);
+      host.appendChild(outer);
+      layers.push({ outer, inner, depth });
+
+      inner.addEventListener('mouseenter', () => {
+        layers.forEach(l => {
+          const on = l.inner === inner;
+          l.inner.style.opacity = on ? '1' : (0.1 + l.depth * 0.14).toFixed(2);
+          l.inner.style.transform = on ? 'scale(1.16)' : 'scale(.96)';
+          l.inner.style.letterSpacing = on ? '.04em' : '0';
+        });
+      });
     });
+
+    host.addEventListener('mouseleave', () => {
+      layers.forEach(l => {
+        l.inner.style.opacity = (0.24 + l.depth * 0.66).toFixed(2);
+        l.inner.style.transform = 'none';
+        l.inner.style.letterSpacing = '0';
+        l.outer.style.transform = 'translate(-50%,-50%)';
+      });
+    });
+
+    host.addEventListener('mousemove', (e) => {
+      const r = host.getBoundingClientRect();
+      const dx = (e.clientX - r.left) / r.width - 0.5, dy = (e.clientY - r.top) / r.height - 0.5;
+      layers.forEach(l => {
+        l.outer.style.transform = 'translate(-50%,-50%) translate('
+          + (-dx * 26 * l.depth).toFixed(1) + 'px,' + (-dy * 16 * l.depth).toFixed(1) + 'px)';
+      });
+    });
+
+    const place = () => {
+      const hr = host.getBoundingClientRect();
+      if (!hr.width) return;
+      const PAD = 22, M = 16;
+      const items = layers.map(l => {
+        const b = l.inner.getBoundingClientRect();
+        return { l, w: b.width, h: b.height, x: b.left - hr.left + b.width / 2, y: b.top - hr.top + b.height / 2 };
+      });
+      const clamp = (it) => {
+        it.x = Math.min(hr.width - it.w / 2 - M, Math.max(it.w / 2 + M, it.x));
+        it.y = Math.min(hr.height - it.h / 2 - M, Math.max(it.h / 2 + M, it.y));
+      };
+      items.forEach(clamp);
+      for (let pass = 0; pass < 90; pass++) {
+        let moved = false;
+        for (let i = 0; i < items.length; i++) {
+          for (let j = i + 1; j < items.length; j++) {
+            const a = items[i], b = items[j];
+            const ox = (a.w + b.w) / 2 + PAD - Math.abs(a.x - b.x);
+            const oy = (a.h + b.h) / 2 + PAD - Math.abs(a.y - b.y);
+            if (ox > 0 && oy > 0) {
+              moved = true;
+              if (ox < oy) {
+                const s = (a.x <= b.x ? -1 : 1) * (ox / 2 + 0.5);
+                a.x += s; b.x -= s;
+              } else {
+                const s = (a.y <= b.y ? -1 : 1) * (oy / 2 + 0.5);
+                a.y += s; b.y -= s;
+              }
+              clamp(a); clamp(b);
+            }
+          }
+        }
+        if (!moved) break;
+      }
+      items.forEach(it => {
+        it.l.outer.style.left = it.x.toFixed(1) + 'px';
+        it.l.outer.style.top = it.y.toFixed(1) + 'px';
+      });
+    };
+    requestAnimationFrame(() => requestAnimationFrame(place));
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => setTimeout(place, 60));
+    window.addEventListener('resize', () => setTimeout(place, 120));
   }
 
   _flow() {
@@ -719,6 +1376,8 @@ class Component extends DCLogic {
     const v = vi >= 0 ? FIGS[vi] : null;
     const cur = QS[this.state.qi];
     const filter = this.state.filter;
+    const h = this.state.cell ? this.state.cell.split('-').map(Number) : null;
+    const hr = h ? h[0] : null, hc = h ? h[1] : null;
 
     const spokes = QS.map((qq, i) => {
       const deg = (i / QS.length) * 360 - 90;
@@ -759,6 +1418,83 @@ class Component extends DCLogic {
       canvasRef: (el) => { this._canvas = el; },
       cursorRef: (el) => { this._cursor = el; },
       emoRef: (el) => { this._emo = el; },
+      models: MODELS.map((m, c) => ({
+        short: m.short,
+        style: 'font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;text-align:center;padding-bottom:8px;transition:color .3s;color:'
+          + (hc === c ? 'var(--acc)' : 'var(--ink2)')
+      })),
+      matrix: ALIGN.map((row, r) => ({
+        name: row.name,
+        agg: row.agg.toFixed(2),
+        labelStyle: 'display:flex;align-items:center;font-size:14.5px;font-weight:600;padding-right:10px;transition:color .3s,opacity .3s;'
+          + (hr === r ? 'color:var(--acc)' : (hr != null ? 'opacity:.5' : '')),
+        aggStyle: 'position:relative;display:flex;align-items:center;justify-content:center;border-radius:10px;overflow:hidden;background:var(--paper2);border:1px solid var(--rule);min-height:46px;transition:opacity .3s;'
+          + (hr != null && hr !== r ? 'opacity:.45' : ''),
+        aggFill: 'position:absolute;left:0;top:0;bottom:0;width:' + Math.round(row.agg * 100) + '%;background:var(--glow)',
+        cells: row.v.map((v, c) => {
+          const t = Math.max(0, Math.min(1, (v - 0.36) / (0.71 - 0.36)));
+          const dim = (hr != null && hr !== r && hc !== c);
+          const on = hr === r && hc === c;
+          return {
+            key: r + '-' + c,
+            value: v.toFixed(2),
+            style: 'display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:10px;cursor:default;'
+              + 'font-size:14.5px;font-weight:600;font-variant-numeric:tabular-nums;'
+              + 'background:color-mix(in srgb, var(--acc) ' + Math.round(10 + t * 78) + '%, var(--paper2));'
+              + 'color:' + (t > 0.55 ? '#FFFDF7' : 'var(--ink)') + ';'
+              + 'transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s,box-shadow .35s;'
+              + (dim ? 'opacity:.32;' : '')
+              + (on ? 'transform:scale(1.09);box-shadow:0 10px 26px var(--shadow);z-index:2' : '')
+          };
+        })
+      })),
+      readTag: h ? MODELS[hc].full : 'Six dimensions · four embedding models',
+      readTitle: h ? ALIGN[hr].name + ' · ' + ALIGN[hr].v[hc].toFixed(2) : 'Techniques align most closely, at 0.61',
+      readNote: h
+        ? (ALIGN[hr].v[hc] === 0.70 ? 'The highest value in the matrix.'
+          : ALIGN[hr].v[hc] === 0.37 ? 'The lowest value in the matrix.'
+          : 'Median cosine similarity between CognArtive descriptions of ' + ALIGN[hr].name.toLowerCase() + ' and established art style descriptions, measured in ' + MODELS[hc].full + '.')
+        : 'Hover any cell to read a single model and dimension. Light and Contrast is the weakest at 0.46, the dimension where model language and art historical language agree least.',
+      onCellHover: (e) => {
+        const c = e.target.closest && e.target.closest('[data-cell]');
+        if (c && c.dataset.cell !== this.state.cell) this.setState({ cell: c.dataset.cell });
+      },
+      clearCell: () => this.setState({ cell: null }),
+      corpusRef: (el) => { this._corpusEl = el; },
+      welcomeRef: (el) => { this._welcomeEl = el; },
+      toneRef: (el) => { this._toneEl = el; },
+      tones: TONES.map(t => {
+        const lum = (hex) => {
+          const c = [1, 3, 5].map(i => parseInt(hex.substr(i, 2), 16) / 255)
+            .map(v => v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+          return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+        };
+        const light = lum(t.hex) > 0.42;
+        const fg = light ? '#191612' : '#F6F2EA';
+        const scrim = light
+          ? 'linear-gradient(to top, rgba(255,253,247,.94) 0%, rgba(255,253,247,.86) 46%, rgba(255,253,247,.3) 100%)'
+          : 'linear-gradient(to top, rgba(16,14,12,.9) 0%, rgba(16,14,12,.78) 46%, rgba(16,14,12,.22) 100%)';
+        const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+        return {
+          name: t.name, hex: t.hex.toUpperCase(), desc: t.desc, trend: t.trend || '',
+          roman: ROMAN[TONES.indexOf(t)],
+          panel: 'position:relative;flex:1 1 0;min-width:0;border-radius:12px;overflow:hidden;background:' + t.hex + ';color:' + fg
+            + ';transition:flex .6s cubic-bezier(.2,.8,.2,1),filter .45s',
+          depth: 'position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top, '
+            + (light ? 'rgba(25,22,18,.16)' : 'rgba(0,0,0,.34)') + ' 0%, transparent 42%), linear-gradient(to right, '
+            + (light ? 'rgba(255,255,255,.28)' : 'rgba(255,255,255,.1)') + ' 0%, transparent 55%)',
+          num: 'position:absolute;top:14px;left:0;right:0;text-align:center;font-family:\'Libre Caslon Display\',serif;font-size:13px;opacity:.62;transition:opacity .35s',
+          label: 'position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;transition:opacity .35s',
+          scrim: 'position:absolute;inset:0;background:' + scrim,
+          chip: 'width:16px;height:16px;border-radius:4px;flex:none;background:' + t.hex
+            + ';border:1px solid ' + (light ? 'rgba(25,22,18,.35)' : 'rgba(246,242,234,.5)')
+            + ';box-shadow:0 0 0 3px ' + (light ? 'rgba(255,253,247,.9)' : 'rgba(16,14,12,.8)'),
+          trendStyle: t.trend
+            ? 'margin-top:14px;align-self:flex-start;padding:6px 12px;border-radius:999px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:1px solid '
+              + (light ? 'rgba(25,22,18,.45)' : 'rgba(246,242,234,.55)')
+            : 'display:none'
+        };
+      }),
       shelfRef: (el) => { this._shelfEl = el; },
       figureCount: figures.length + ' of ' + FIGS.length + ' figures',
       themeIcon: this.state.theme === 'dark' ? '☀' : '☾',
